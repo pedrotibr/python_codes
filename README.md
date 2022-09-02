@@ -1,4 +1,4 @@
-Sistema de cadastro de pacientes com impressão em pdf, pra ser configurado com servidor mysql.
+Sistema de cadastro de pacientes com impressão em pdf, pra ser configurado com servidor mysql. <br>
 Código disponivel para utilização e aberto pra melhorias.
 
 1 - Criar ambiente com python 3.8
