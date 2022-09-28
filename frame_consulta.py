@@ -85,7 +85,7 @@ class Frame2(wx.Frame):
     def select_item(self, event):
         
         
-        cursor.execute('select * from database.CLIENTES where nome like "%'+self.combobox_nome.GetValue()+'%"')
+        cursor.execute('select * from database.TABLE2 where nome like "%'+self.combobox_nome.GetValue()+'%"')
         
         row=cursor.fetchone()
 
@@ -123,7 +123,7 @@ class Frame2(wx.Frame):
         self.nome_sql=self.combobox_nome.GetValue()
         
        
-        numrows=cursor.execute('select * from database.CLIENTES where nome like "%'+self.nome_sql+'%"')
+        numrows=cursor.execute('select * from database.TABLE2 where nome like "%'+self.nome_sql+'%"')
         
         row=cursor.fetchone()
         
@@ -149,7 +149,7 @@ class Frame2(wx.Frame):
         y=10
      
         numrows = int(cursor.rowcount)
-        c = canvas.Canvas("tags_db.pdf")
+        c = canvas.Canvas("./arquivos.pdf")
         for num in range (0, numrows):
             #x=x+10
             y=y+10
@@ -170,7 +170,7 @@ class Frame2(wx.Frame):
             if remove:
                     num = str(self.editcod.GetValue())
               
-                    cursor.execute("delete from nomes2 where id_codigo= %s",[num])
+                    cursor.execute("delete from TABLE4 where id_codigo= %s",[num])
                     db.commit()
              
                     self.Onant(0)
