@@ -26,7 +26,7 @@ class Framew1(wx.Frame):
     def __init__(self, prnt):
        
         
-        wx.Frame.__init__(self,id=-1, parent=prnt, title='Cadastro de Pacientes',style = wx.DEFAULT_FRAME_STYLE & ~wx.MAXIMIZE_BOX ^ wx.RESIZE_BORDER)
+        wx.Frame.__init__(self,id=-1, parent=prnt, title='Cadastro',style = wx.DEFAULT_FRAME_STYLE & ~wx.MAXIMIZE_BOX ^ wx.RESIZE_BORDER)
         self.panel = wx.Panel(self, id=-1)
         
         lblList1 = ['Masculino','Feminino']   
@@ -252,8 +252,7 @@ class Framew1(wx.Frame):
         
         self.data_selecionada=x
         
-        
-        
+ 
     def frame_calendario2(self, event):
            
         if not self.calendario:    
@@ -289,7 +288,7 @@ class Framew1(wx.Frame):
         db=MySQLdb.connect(host="127.0.0.1",port=3306,user="user",passwd="password",db="database")
         cursor = db.cursor()
         
-        cursor.execute('select * from database.CLIENTES where nome like "%'+user+'%"')
+        cursor.execute('select * from database.TABLE2 where nome like "%'+user+'%"')
         row=cursor.fetchone()
         
         self.edit_prontuario.SetValue(str(row[0]))        
@@ -416,9 +415,7 @@ class Framew1(wx.Frame):
 
         wildcard = "Arquivos de imagem (*.png;*.jpg;*.jpeg)|*.png;*.jpg;*.jpeg"
         dlg = wx.FileDialog(self, "Escolha o arquivo", os.getcwd(), "", wildcard, wx.FD_OPEN)
-        #dlg = wx.FileDialog(self, "Escolha a pasta", os.getfolder(), "", wildcard, wx.FD_OPEN)
-        #dlg = wx.DirDialog (None, "Escolha a pasta", "", wx.DD_DEFAULT_STYLE | wx.DD_DIR_MUST_EXIST)
-		
+
         if dlg.ShowModal() == wx.ID_OK: 
            
            self.setimage(dlg.GetPath())
@@ -462,7 +459,7 @@ class Framew1(wx.Frame):
         cursor = db.cursor()
         
         
-        numrows=cursor.execute('select * from database.CLIENTES where nome like "%'+self.nome_sql+'%"')
+        numrows=cursor.execute('select * from database.TABLE2 where nome like "%'+self.nome_sql+'%"')
         
         row=cursor.fetchone()
         
@@ -491,7 +488,7 @@ class Framew1(wx.Frame):
         cursor = db.cursor()
         
         
-        cursor.execute('select * from database.CLIENTES where nome like "%'+self.a1+'%"')
+        cursor.execute('select * from database.TABLE2 where nome like "%'+self.a1+'%"')
         
         row=cursor.fetchone()  
   
@@ -620,17 +617,17 @@ class Framew1(wx.Frame):
         
        
   
-        c.drawImage("./imagens/logo_pillar.jpg", 10, 750, width=72, height=72)
+        c.drawImage("./logo1.jpg", 10, 750, width=72, height=72)
         
-        c.drawImage("./imagens/alvaro_alvim.png", 140, 750, width=150, height=72)
+        c.drawImage("./logo2.png", 140, 750, width=150, height=72)
             
-        c.drawImage("./imagens/fbpn.png", 340, 750, width=150, height=72)
+        c.drawImage("./logo3.png", 340, 750, width=150, height=72)
             
         c.setFontSize(16)
         c.drawString(510,790,("Registro de"))
             
         c.setFontSize(16)
-        c.drawString(510,770,("Prontuários"))
+        c.drawString(510,770,("cadastros"))
             
   
             
@@ -640,7 +637,7 @@ class Framew1(wx.Frame):
         c.drawString(0,750,(line))
   
                
-        cabecalho="Prontuário Médico"
+        cabecalho="Cadastro"
         c.setFontSize(20)
         
                 
@@ -652,7 +649,7 @@ class Framew1(wx.Frame):
                
         c.save()
         
-        os.system("start ./Dados_paciente.pdf&") 
+        os.system("evince ./arquivo.pdf&") 
         
         
         db.close()  
@@ -668,7 +665,7 @@ class Framew1(wx.Frame):
 
         cursor = db.cursor()
   
-        cursor.execute("select * from database.CLIENTES where codigo > (%s) order by codigo ASC", [num])
+        cursor.execute("select * from database.TABLE2 where codigo > (%s) order by codigo ASC", [num])
         
         row= cursor.fetchone()
  
@@ -730,7 +727,7 @@ class Framew1(wx.Frame):
 
         cursor = db.cursor()
    
-        cursor.execute("select * from database.CLIENTES order by codigo DESC")
+        cursor.execute("select * from database.TABLE2 order by codigo DESC")
         row= cursor.fetchone()
 
         db.close()
@@ -744,7 +741,7 @@ class Framew1(wx.Frame):
 
         cursor = db.cursor()
         
-        cursor.execute("select * from database.CLIENTES order by codigo ASC")
+        cursor.execute("select * from database.TABLE2 order by codigo ASC")
         row= cursor.fetchone()
         
    
@@ -762,7 +759,7 @@ class Framew1(wx.Frame):
         
         num = str(self.edit_prontuario.GetValue())
         
-        cursor.execute("select * from database.CLIENTES where codigo < (%s) order by codigo DESC", [num])
+        cursor.execute("select * from database.TABLE2 where codigo < (%s) order by codigo DESC", [num])
         
         row= cursor.fetchone()
     
@@ -831,7 +828,7 @@ class Framew1(wx.Frame):
   
         num = str(int(cursor.rowcount))
          
-        cursor.execute("select * from database.CLIENTES order by codigo DESC")
+        cursor.execute("select * from database.TABLE2 order by codigo DESC")
         
         row= cursor.fetchone()
         numrows = int(cursor.rowcount)
@@ -888,7 +885,7 @@ class Framew1(wx.Frame):
         cursor = db.cursor()
   
         
-        cursor.execute("select * from database.CLIENTES order by codigo ASC")
+        cursor.execute("select * from database.TABLE2 order by codigo ASC")
         row=cursor.fetchone() 
             
         self.edit_prontuario.SetValue(str(row[0]))        
@@ -1032,7 +1029,7 @@ class Framew1(wx.Frame):
         if (self.edit == True):# and (status_cpf) and (status_rg):
                        
            
-            cursor.execute('UPDATE CLIENTES SET nome = "'+nome+'", endereco = "'+endereco+'", bairro = "'+bairro+'", cidade = "'+cidade+'",estado = "'+estado+'",cep = "'+cep+'", telefone1 = "'+telefone+'", telefone2 = "'+celular+'", nascimento = "'+nascimento+'", rg = "'+rg+'", emissor = "'+orgao_emissor+'",cpf = "'+cpf+'",pai = "'+pai+'",mae = "'+mae+'",profissao = "'+profissao+'", data = "'+data+'", fotografia = "'+fotografia+'",cns = "'+cns+'", heaa = "'+heaa+'"  where "'+codigo+'" = codigo' )
+            cursor.execute('UPDATE TABLE2 SET nome = "'+nome+'", endereco = "'+endereco+'", bairro = "'+bairro+'", cidade = "'+cidade+'",estado = "'+estado+'",cep = "'+cep+'", telefone1 = "'+telefone+'", telefone2 = "'+celular+'", nascimento = "'+nascimento+'", rg = "'+rg+'", emissor = "'+orgao_emissor+'",cpf = "'+cpf+'",pai = "'+pai+'",mae = "'+mae+'",profissao = "'+profissao+'", data = "'+data+'", fotografia = "'+fotografia+'",cns = "'+cns+'", heaa = "'+heaa+'"  where "'+codigo+'" = codigo' )
             
             db.commit()
             row=cursor.fetchone()
@@ -1043,7 +1040,7 @@ class Framew1(wx.Frame):
            
            
           
-            sql="INSERT INTO CLIENTES VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+            sql="INSERT INTO TABLE2 VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
         
             
             values=(codigo,nome,endereco,bairro,cidade,estado,cep,telefone,celular,contato,nascimento,rg,orgao_emissor,cpf,pai,mae,profissao,data,cns,heaa,sexo,fotografia)
@@ -1165,7 +1162,7 @@ class Framew1(wx.Frame):
                     num = str(self.edit_prontuario.GetValue())
                     #print (num)
                    
-                    cursor.execute("delete from CLIENTES where codigo = %s",[num])
+                    cursor.execute("delete from TABLE2 where codigo = %s",[num])
                     db.commit()
                     self.Onant(0)
   
